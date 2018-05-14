@@ -31,6 +31,14 @@ MANIFEST
 *.manifest
 *.spec
 
+#Virtualenv
+bin/
+include/
+pip-selfcheck.json
+
+#Ngrok
+tunnel/
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
