@@ -23,9 +23,9 @@ def getTunnelURL(port):
 def updateSubscription(url):
   try:
     # grabbing the current topics for updating the subscription
-    topics = requests.get(sub_endpoint + webhook_id, headers=headers).json()['topics']
+    r = requests.get(sub_endpoint + webhook_id, headers=headers).json()
     # updating the subscription with the new url
-    r = requests.post(sub_endpoint + webhook_id, data=json.dumps({'topics': topics, 'url': url}), headers=headers)
+    r = requests.post(sub_endpoint + webhook_id, data=json.dumps({'topics': r['topics'], 'metadata': r['metadata'], 'url': url}), headers=headers)
     if r.status_code != 200:
       raise Exception
   except Exception as e:
