@@ -12,7 +12,7 @@ A small CLI tool for quickly setting up and testing Intercom webhooks, powered b
   <img src="https://user-images.githubusercontent.com/20187768/40028598-b821d618-57d7-11e8-9029-91327a9cdfb6.gif">
 </p>
 
-You'll need extended scopes on your token. Once the webhook subscription is set up, the setup process will finish automatically.
+You'll need extended scopes on your token. Once the webhook subscription is set up, the setup process will finish automatically if you're setting a new subscription. If you're editing an already existing one, make sure to trigger a ping at the end.
 From now on, your subscription will get updated with the ngrok public URL everytime the tool is started. 
 The subscription's topics can be changed, but if you do delete your subscription or you rotate your Access Token, you'll need to run the setup process again.
 
