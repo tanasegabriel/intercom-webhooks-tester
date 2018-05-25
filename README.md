@@ -18,6 +18,17 @@ The subscription's topics can be changed, but if you do delete your subscription
 
 The JSON payload of each notification will be printed on your terminal, but you can also use ngrok's built in webgui by accessing `http://localhost:4040`
 
+#### Usage:
+
+```
+intercom-webhooks-tester [-h] [-s] [-p]
+
+optional arguments:
+  -h, --help      show this help message and exit
+  -s, --setup     setup
+  -p, --prettify  prettify the JSON payload of the notifications
+```
+
 
 ### Development:
 1. Create a folder called `tunnel` in the root of the project. Download the [latest ngrok binary](https://ngrok.com/download) and place it in this folder

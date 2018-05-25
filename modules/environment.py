@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv, set_key, unset_key
 
-env_path = Path('.') / '.env'
+env_path = Path(os.path.dirname(os.path.realpath(__file__))).parent / '.env'
+
 if not env_path.is_file():
   env_file = open(str(env_path), 'w+')
   env_file.close()

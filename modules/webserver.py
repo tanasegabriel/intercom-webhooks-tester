@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+import os
 import sys
+import json
 import psutil
 import atexit
 import logging
@@ -8,9 +10,10 @@ import threading
 import subprocess
 from pathlib import Path
 from flask import Flask, request, abort
+from pygments import highlight, lexers, formatters
 from modules import prompt, api_caller, environment
 
-def start(mode=None, setenv=False):
+def start(mode=None, setenv=False, prettify=False):
   app = Flask(__name__)
   log = logging.getLogger('werkzeug')
   log.setLevel(logging.ERROR)
@@ -27,7 +30,13 @@ def start(mode=None, setenv=False):
 
       now = str(datetime.datetime.time(datetime.datetime.now()))
       prompt.prints('\nNew webhook received at ' + now, 'new_webhook')
-      print(request.get_json())
+
+      if prettify:
+        formatted_json = json.dumps(request.get_json(), sort_keys=True, indent=4)
+        colourful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+        print(colourful_json)
+      else:
+        print(request.get_json())
       return '', 200
 
     else:
@@ -64,10 +73,11 @@ def createTunnel():
         sys.exit(1)
 
   # starting a new tunnel
-  ngrok = subprocess.Popen([Path('.') / "tunnel/ngrok", "http", "5000"], stdout=subprocess.PIPE)
+  dir_path = Path(os.path.dirname(os.path.realpath(__file__))).parent
+  ngrok = subprocess.Popen([dir_path / "tunnel/ngrok", "start", "--none"], stdout=subprocess.PIPE)
   prompt.countdown(3, 'Tunnel will be up in ', 'Ngrok tunnel created! ')
 
   @atexit.register  # making sure the tunnel is closed when terminating
   def kill_tunnel():
     ngrok.kill()
-  return api_caller.getTunnelURL(5000)
+  return api_caller.createTunnel()

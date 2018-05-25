@@ -14,11 +14,11 @@ try:
 except Exception as e:
   pass
 
-def getTunnelURL(port):
-  tunnels = requests.get("http://localhost:4040/api/tunnels").json()['tunnels']
-  for tunnel in tunnels:
-    if tunnel['proto'] == 'https' and tunnel['config']['addr'] == 'localhost:' + str(port):
-      return tunnel['public_url']
+def createTunnel():
+  data = json.dumps({'addr': 5000, 'proto': 'http', 'name': 'webooks_tester'})
+  headers = {'Content-Type': 'application/json'}
+  r = requests.post('http://localhost:4040/api/tunnels', data=data, headers=headers)
+  return r.json()['public_url']
 
 def updateSubscription(url):
   try:
