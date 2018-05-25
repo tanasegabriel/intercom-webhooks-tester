@@ -35,8 +35,17 @@ optional arguments:
 2. Run `pip -r install requirements.txt` preferably in a virtualenv and you're good to go!
 
 #### New releases:
-1. Run `pyinstaller --onefile tester.py` for packaging. You'll find your binary file in the `dist` directory. 
+1. Package the file using `pyinstaller` - you'll find the result of this in the `dist` folder.
 2. While creating a new zip file for a new release, make sure to include the `tunnel` directory containing the `ngrok` binary file.
+
+```bash
+$ pyinstaller -D -n 'intercom-webooks-tester' tester.py
+$ mkdir tunnel && cd tunnel
+$ wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-darwin-amd64.zip #downloading ngrok for OS X
+$ unzip ngrok-stable-darwin-amd64.zip && rm -rf ngrok-stable-darwin-amd64.zip #unziping and removing the archive
+$ cd ../..
+$ zip -r intercom-webhooks-tester_v0.2_osx.zip intercom-webooks-tester/ #creating a new zip file to be released
+```
 
 
 ### Mentions:
